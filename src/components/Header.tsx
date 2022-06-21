@@ -7,7 +7,7 @@ export function Header() {
       <Container className="flex flex-1 justify-between">
         <h1 className="text-2xl font-bold text-text-light">Where in the world?</h1>
         <button>
-          <Sun />
+          <Sun size={24} />
         </button>
       </Container>
     </header>

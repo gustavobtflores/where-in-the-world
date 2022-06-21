@@ -1,3 +1,5 @@
+import { AnimationProps, motion, MotionAdvancedProps, MotionConfigContext } from "framer-motion";
+
 export interface Country {
   name: string;
   population: number;
@@ -9,12 +11,13 @@ export interface Country {
 interface CountryItemProps {
   country: Country;
   onClick: () => void;
+  animationVariants?: AnimationProps["variants"];
 }
 
 export function CountryItem({ country, onClick }: CountryItemProps) {
   return (
-    <div className="rounded-[4px] overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200">
-      <img className="w-full h-[160px]" src={country.flag} />
+    <motion.div className="rounded-[4px] overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200">
+      <img className="w-full h-[160px] object-cover" src={country.flag} />
       <div className="p-6 pb-10 bg-light-white">
         <strong className="block text-xl font-bold mb-4">{country.name}</strong>
         <p>
@@ -29,6 +32,6 @@ export function CountryItem({ country, onClick }: CountryItemProps) {
           {country.capital}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
