@@ -18,7 +18,7 @@ export function CountryItem({ country, onClick }: CountryItemProps) {
   return (
     <motion.div
       onClick={() => onClick(country.name)}
-      className="rounded-[4px] overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 bg-white max-w-[300px] w-full mx-auto"
+      className="rounded-[4px] overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 bg-white max-w-[300px] w-full mx-auto"
     >
       <img loading="lazy" className="w-full h-[160px] object-cover" src={country.flag} />
       <div className="p-6 pb-10 bg-light-white">
