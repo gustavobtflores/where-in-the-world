@@ -10,14 +10,17 @@ export interface Country {
 
 interface CountryItemProps {
   country: Country;
-  onClick: () => void;
+  onClick: (countryName: string) => void;
   animationVariants?: AnimationProps["variants"];
 }
 
 export function CountryItem({ country, onClick }: CountryItemProps) {
   return (
-    <motion.div className="rounded-[4px] overflow-hidden shadow-md cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200">
-      <img className="w-full h-[160px] object-cover" src={country.flag} />
+    <motion.div
+      onClick={() => onClick(country.name)}
+      className="rounded-[4px] overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 bg-white max-w-[300px] w-full mx-auto"
+    >
+      <img loading="lazy" className="w-full h-[160px] object-cover" src={country.flag} />
       <div className="p-6 pb-10 bg-light-white">
         <strong className="block text-xl font-bold mb-4">{country.name}</strong>
         <p>
@@ -29,7 +32,7 @@ export function CountryItem({ country, onClick }: CountryItemProps) {
         </p>
         <p>
           <strong>Capital: </strong>
-          {country.capital}
+          {country.capital || "Unknown"}
         </p>
       </div>
     </motion.div>
