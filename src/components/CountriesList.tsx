@@ -1,3 +1,4 @@
+import { AnimatePresence } from "framer-motion";
 import { Country, CountryItem } from "./CountryItem";
 
 interface CountriesListProps {
