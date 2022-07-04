@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export interface Country {
   name: string;
   population: number;
@@ -8,13 +10,12 @@ export interface Country {
 
 interface CountryItemProps {
   country: Country;
-  onClick: (countryName: string) => void;
 }
 
-export function CountryItem({ country, onClick }: CountryItemProps) {
+export function CountryItem({ country }: CountryItemProps) {
   return (
-    <div
-      onClick={() => onClick(country.name)}
+    <Link
+      to={`/countries/${country.name.toLowerCase().split(" ")[0]}`}
       className="rounded-[4px] overflow-hidden shadow-lg cursor-pointer hover:scale-105 transition-transform ease-in-out duration-200 bg-white max-w-[300px] w-full mx-auto"
     >
       <img loading="lazy" className="w-full h-[160px] object-cover" src={country.flag} />
@@ -32,6 +33,6 @@ export function CountryItem({ country, onClick }: CountryItemProps) {
           {country.capital || "Unknown"}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
