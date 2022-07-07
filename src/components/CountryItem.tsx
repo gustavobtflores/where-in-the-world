@@ -24,7 +24,7 @@ export function CountryItem({ country }: CountryItemProps) {
         className="w-full h-[160px] object-cover"
         src={country.flag}
       />
-      <div className="p-6 pb-10 bg-light-white">
+      <div className="p-6 pb-10 bg-elements-light dark:bg-elements-dark dark:text-text-dark">
         <strong className="block text-xl font-bold mb-4">{country.name}</strong>
         <p>
           <strong>Population:</strong> {country.population.toLocaleString()}
