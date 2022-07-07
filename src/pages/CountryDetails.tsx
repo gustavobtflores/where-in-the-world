@@ -36,15 +36,17 @@ export const CountryDetails = () => {
       const currenciesId = Object.keys(country.currencies);
       const languages = Object.values(country.languages).join(", ");
 
-      const borders = await axios(
-        `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(
-          ","
-        )}&fields=name`
-      ).then((res) => {
-        return res.data.map((border: { name: { common: string } }) => {
-          return border.name.common;
+      if (country.borders) {
+        var borders = await axios(
+          `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(
+            ","
+          )}&fields=name`
+        ).then((res) => {
+          return res.data.map((border: { name: { common: string } }) => {
+            return border.name.common;
+          });
         });
-      });
+      }
 
       const countryFormatted: CountryDetails = {
         name: {
@@ -80,7 +82,7 @@ export const CountryDetails = () => {
               <ArrowLeft size={20} />
               Back
             </Link>
-            <div className="flex gap-20">
+            <div className="flex gap-20 items-center">
               <img
                 className="max-w-lg"
                 src={country.flag}
@@ -128,21 +130,23 @@ export const CountryDetails = () => {
                     </span>
                   </div>
                 </div>
-                <div className="mt-8 flex items-center">
-                  <strong>Border countries:</strong>
-                  <div className="max-w-xl flex flex-wrap ml-4 gap-2">
-                    {country.borders.map((border) => {
-                      return (
-                        <span
-                          key={border}
-                          className="flex items-center justify-center py-1 px-4 min-w-[80px] drop-shadow-sm border-gray-100 border-[1px] bg-light-white"
-                        >
-                          {border}
-                        </span>
-                      );
-                    })}
+                {country.borders ? (
+                  <div className="mt-8 flex items-start">
+                    <strong>Border countries:</strong>
+                    <div className="max-w-xl flex flex-wrap ml-4 gap-2">
+                      {country.borders.map((border) => {
+                        return (
+                          <span
+                            key={border}
+                            className="flex items-center justify-center py-1 px-4 min-w-[80px] drop-shadow-sm border-gray-100 border-[1px] bg-light-white"
+                          >
+                            {border}
+                          </span>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
           </Container>
