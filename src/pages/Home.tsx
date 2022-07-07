@@ -16,6 +16,7 @@ export interface CountryResponse {
     png: string;
   };
   region: string;
+  cioc: string;
 }
 
 export const Home = () => {
@@ -55,7 +56,7 @@ export const Home = () => {
   useEffect(() => {
     async function getCountries() {
       const countries = await axios(
-        "https://restcountries.com/v3.1/all?fields=name,population,capital,region,flags"
+        "https://restcountries.com/v3.1/all?fields=name,population,capital,region,flags,cioc"
       ).then((response) => {
         const data = response.data;
         return data;
@@ -68,6 +69,7 @@ export const Home = () => {
           capital: country.capital[0],
           region: country.region,
           flag: country.flags?.png,
+          code: country.cioc,
         };
       });
 

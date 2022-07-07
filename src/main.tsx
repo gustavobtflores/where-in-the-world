@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="/" element={<Home />} />
-          <Route path={`countries/:countryName`} element={<CountryDetails />} />
+          <Route path={`countries/:countryCode`} element={<CountryDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>

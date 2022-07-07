@@ -13,7 +13,6 @@ export function CountriesList({ countries }: CountriesListProps) {
           return <CountryItem key={country.name} country={country} />;
         })}
       </div>
-      {countries.length <= 0 ? <div className="font-bold text-gray-900 text-4xl mt-8">No countries found with the filters selected</div> : null}
     </>
   );
 }

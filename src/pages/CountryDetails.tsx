@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ArrowArcLeft, ArrowElbowLeft, ArrowLeft } from "phosphor-react";
+import { ArrowLeft } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Container } from "../components/Container";
@@ -17,16 +17,17 @@ interface CountryDetails {
   tld: string[];
   currency: string;
   languages: string;
+  borders: string[];
 }
 
 export const CountryDetails = () => {
   const [country, setCountry] = useState<CountryDetails>();
-  const countryName = useParams().countryName;
+  const countryCode = useParams().countryCode;
 
   useEffect(() => {
     const getCountryDetails = async () => {
       const country = await axios(
-        `https://restcountries.com/v3.1/name/${countryName}`
+        `https://restcountries.com/v3.1/alpha/${countryCode}`
       ).then((res) => {
         return res.data[0];
       });
@@ -34,9 +35,16 @@ export const CountryDetails = () => {
       const nativeNameId = Object.keys(country.name.nativeName);
       const currenciesId = Object.keys(country.currencies);
       const languages = Object.values(country.languages).join(", ");
-      console.log(languages);
 
-      console.log(country, currenciesId);
+      const borders = await axios(
+        `https://restcountries.com/v3.1/alpha?codes=${country.borders.join(
+          ","
+        )}&fields=name`
+      ).then((res) => {
+        return res.data.map((border: { name: { common: string } }) => {
+          return border.name.common;
+        });
+      });
 
       const countryFormatted: CountryDetails = {
         name: {
@@ -51,6 +59,7 @@ export const CountryDetails = () => {
         subregion: country.subregion,
         tld: country.tld[0],
         languages: languages,
+        borders: borders,
       };
 
       setCountry(countryFormatted);
@@ -119,8 +128,20 @@ export const CountryDetails = () => {
                     </span>
                   </div>
                 </div>
-                <div>
-                  <strong>Border countries: </strong>
+                <div className="mt-8 flex items-center">
+                  <strong>Border countries:</strong>
+                  <div className="max-w-xl flex flex-wrap ml-4 gap-2">
+                    {country.borders.map((border) => {
+                      return (
+                        <span
+                          key={border}
+                          className="flex items-center justify-center py-1 px-4 min-w-[80px] drop-shadow-sm border-gray-100 border-[1px] bg-light-white"
+                        >
+                          {border}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
