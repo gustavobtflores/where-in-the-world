@@ -8,7 +8,7 @@ interface CountriesListProps {
 export function CountriesList({ countries }: CountriesListProps) {
   return (
     <>
-      <div className="grid grid-cols-countryItem gap-[3.75rem] mt-4">
+      <div className="grid grid-cols-countryItem gap-[3.75rem] mt-12">
         {countries.map((country) => {
           return <CountryItem key={country.name} country={country} />;
         })}

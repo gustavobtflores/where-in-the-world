@@ -37,23 +37,6 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    var result = countries;
-    result = result.filter(meetsSearchCriteria);
-
-    if (selectedRegion !== "") {
-      result = result.filter(meetsRegionCriteria);
-    }
-
-    if (countrySearch || selectedRegion) {
-      setFilteredCountries(result);
-    }
-  }, [countrySearch, selectedRegion]);
-
-  function onRegionSelected(region: string) {
-    setSelectedRegion(region);
-  }
-
-  useEffect(() => {
     async function getCountries() {
       const countries = await axios(
         "https://restcountries.com/v3.1/all?fields=name,population,capital,region,flags,cioc"
@@ -80,6 +63,24 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
+    var result = countries;
+
+    if (countrySearch.length > 0) {
+      result = result.filter(meetsSearchCriteria);
+    }
+
+    if (selectedRegion !== "") {
+      result = result.filter(meetsRegionCriteria);
+    }
+
+    setFilteredCountries(result);
+  }, [countrySearch, selectedRegion, countries]);
+
+  function onRegionSelected(region: string) {
+    setSelectedRegion(region);
+  }
+
+  useEffect(() => {
     const getRegions = () => {
       var uniqueRegions: string[] = [];
 
@@ -99,14 +100,16 @@ export const Home = () => {
   };
 
   return (
-    <Container>
-      <header className="flex justify-between items-center mt-8">
-        <SearchInput onChange={handleCountrySearch} />
-        <Select onRegionSelected={onRegionSelected} options={regions} />
-      </header>
-      <CountriesList
-        countries={filteredCountries ? filteredCountries : countries}
-      />
-    </Container>
+    <div className="pt-8 bg-background-light dark:bg-background-dark min-h-screen pb-8">
+      <Container>
+        <header className="flex justify-between items-center">
+          <SearchInput onChange={handleCountrySearch} />
+          <Select onRegionSelected={onRegionSelected} options={regions} />
+        </header>
+        <CountriesList
+          countries={filteredCountries ? filteredCountries : countries}
+        />
+      </Container>
+    </div>
   );
 };
